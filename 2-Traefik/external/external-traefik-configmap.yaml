@@ -36,7 +36,7 @@ data:
 
     [ping]
       entryPoint = "http"
-    
+
     [accessLog]
 
     [consul]
@@ -45,11 +45,11 @@ data:
       prefix = "traefik-external"
 
     [acme]
-      email = "carlosedp@gmail.com"
+      email = "amerenda89@gmail.com"
       storage = "traefik-external-certificates/acme/account"
       acmeLogging = true
       entryPoint = "https"
       OnHostRule = true
-      #caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
+      caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
       [acme.httpChallenge]
         entryPoint="http"
