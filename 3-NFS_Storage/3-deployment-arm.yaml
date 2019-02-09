@@ -21,11 +21,11 @@ spec:
               mountPath: /persistentvolumes
           env:
             - name: PROVISIONER_NAME
-              value: nfs-provisioner/nfs-ssd1
+              value: nfs-provisioner/nfs-hd1
             - name: NFS_SERVER
-              value: 192.168.1.60
+              value: 10.100.20.201
             - name: NFS_PATH
-              value: /data/kubernetes-storage
+              value: /mnt/exthd1/kube/
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
@@ -42,5 +42,5 @@ spec:
       volumes:
         - name: nfs-client-root
           nfs:
-            server: 192.168.1.60
-            path: /data/kubernetes-storage
+            server: 10.100.20.201
+            path: /mnt/exthd1/kube/
