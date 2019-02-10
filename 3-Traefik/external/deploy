@@ -20,15 +20,12 @@ if ! [ -x "$(command -v helm)" ]; then
   exit 1
 fi
 
-./deploy_consul_cluster.sh
+#./deploy_consul_cluster.sh
+
 
 sleep 20
-# Deploy Traefik RBAC
-kctl apply -f ../traefik-rbac.yaml
-
 # Deploy external Traefik config
 kctl apply -f external-traefik-configmap.yaml
-
 # Deploy external Traefik and it's service
 kctl apply -f external-traefik-service.yaml
 kctl apply -f external-traefik-statefulset.yaml

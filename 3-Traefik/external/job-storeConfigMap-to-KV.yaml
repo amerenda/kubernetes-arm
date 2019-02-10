@@ -3,6 +3,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: traefik-kv-store
+  namespace: kube-system
 spec:
   backoffLimit: 3
   activeDeadlineSeconds: 100
@@ -12,15 +13,18 @@ spec:
     spec:
       containers:
       - name: storeconfig
-        image: dtomcej/traefik:master-arm64-3c8c5eb
+        image: traefik:v1.6
         imagePullPolicy: IfNotPresent
-        args: [ "storeconfig", "-c", "/config/traefik.toml" ]
+        args: [ "storeconfig", "--configfile", "/config/traefik.toml" ]
         volumeMounts:
-        - name: config
-          mountPath: /etc/traefik
+        - mountPath: /config
+          name: config
           readOnly: true
       restartPolicy: Never
       volumes:
       - name: config
         configMap:
           name: traefik-conf-external
+          items:
+          - key: traefik-config
+            path: traefik.toml

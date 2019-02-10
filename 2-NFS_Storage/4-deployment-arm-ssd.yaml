@@ -4,7 +4,7 @@ metadata:
   name: nfs-client-provisioner
   namespace: nfs-storage
 spec:
-  replicas: 2
+  replicas: 1
   strategy:
     type: RollingUpdate
   template:
@@ -21,11 +21,11 @@ spec:
               mountPath: /persistentvolumes
           env:
             - name: PROVISIONER_NAME
-              value: nfs-provisioner/nfs-hd1
+              value: nfs-provisioner/nfs-ssd1
             - name: NFS_SERVER
               value: 10.100.20.201
             - name: NFS_PATH
-              value: /mnt/exthd1/kube/
+              value: /mnt/nfs/extssd1/kube
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
@@ -43,4 +43,4 @@ spec:
         - name: nfs-client-root
           nfs:
             server: 10.100.20.201
-            path: /mnt/exthd1/kube/
+            path: /mnt/nfs/extssd1/kube

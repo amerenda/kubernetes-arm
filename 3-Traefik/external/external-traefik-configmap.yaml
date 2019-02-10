@@ -13,12 +13,8 @@ data:
     [entryPoints]
       [entryPoints.http]
         address = ":80"
-        compress = true
-        [entryPoints.http.redirect]
-        entryPoint = "https"
       [entryPoints.https]
         address = ":443"
-        compress = true
         [entryPoints.https.tls]
 
     [api]
@@ -34,15 +30,22 @@ data:
       buckets=[0.1,0.3,1.2,5.0]
       entryPoint = "traefik"
 
+    [ping]
+      entryPoint = "http"
+
     [accessLog]
 
+    [consul]
+      endpoint = "consul-traefik.kube-system.svc:8500"
+      watch = true
+      prefix = "traefik-external"
+
     [acme]
+      entryPoint = "https"
       email = "amerenda89@gmail.com"
       storage = "traefik-external-certificates/acme/account"
       acmeLogging = true
-      entryPoint = "https"
       OnHostRule = true
-      caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
-
-      [acme.dnsChallenge]
-          provider = "digitalocean"
+      #caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
+      [acme.httpChallenge]
+        entryPoint = "http"

@@ -13,7 +13,7 @@ metadata:
   labels:
     k8s-app: traefik-ingress-lb
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       k8s-app: traefik-ingress-lb
@@ -26,7 +26,7 @@ spec:
       serviceAccountName: traefik-ingress-controller
       terminationGracePeriodSeconds: 60
       containers:
-      - image: traefik:v1.7.5
+      - image: traefik:latest
         name: traefik-ingress-lb
         volumeMounts:
         - mountPath: /config
@@ -56,10 +56,10 @@ spec:
             podAffinityTerm:
               labelSelector:
                 matchExpressions:
-                - key: role
+                - key: k8s-app
                   operator: In
                   values:
-                  - data
+                  - traefik-ingress-lb
               topologyKey: kubernetes.io/hostname
       volumes:
       - name: config
