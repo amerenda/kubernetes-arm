@@ -12,14 +12,6 @@ data:
     # Do not verify backend certificates (use https backends)
     InsecureSkipVerify = false
 
-    [entryPoints]
-      [entryPoints.http]
-      address = ":80"
-      compress = true
-      [entryPoints.https]
-      address = ":443"
-        [entryPoints.https.tls]
-
     # Config to redirect http to https
     [entryPoints]
       [entryPoints.http]
