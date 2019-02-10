@@ -32,7 +32,7 @@ metadata:
     traffic-type: internal
 spec:
   rules:
-  - host: traefik-ext.home.stormhold.net
+  - host: traefik-ext.cloud.stormhold.net
     http:
       paths:
       - path: /
