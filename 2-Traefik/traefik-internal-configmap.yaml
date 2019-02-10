@@ -20,7 +20,7 @@ data:
       address = ":443"
         [entryPoints.https.tls]
 
-    Config to redirect http to https
+    # Config to redirect http to https
     [entryPoints]
       [entryPoints.http]
       address = ":80"
