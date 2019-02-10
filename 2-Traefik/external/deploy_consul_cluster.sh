@@ -10,7 +10,7 @@ metadata:
   namespace: kube-system
 spec:
   rules:
-  - host: consul.internal.carlosedp.com
+  - host: consul.home.stormhold.net
     http:
       paths:
       - path: /
