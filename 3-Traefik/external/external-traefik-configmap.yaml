@@ -43,7 +43,7 @@ data:
     [acme]
       entryPoint = "https"
       email = "amerenda89@gmail.com"
-      storage = "traefik-external-certificates/acme/account"
+      storage = "traefik-certificates/acme/account"
       acmeLogging = true
       OnHostRule = true
       #caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"

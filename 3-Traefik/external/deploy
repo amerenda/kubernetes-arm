@@ -20,7 +20,7 @@ if ! [ -x "$(command -v helm)" ]; then
   exit 1
 fi
 
-#./deploy_consul_cluster.sh
+./deploy_consul_cluster.sh
 
 
 sleep 20

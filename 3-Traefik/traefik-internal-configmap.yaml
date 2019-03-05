@@ -28,12 +28,38 @@ data:
     #  [entryPoints.https]
     #  address = ":443"
     #    [entryPoints.https.tls]
+    [consul]
+      endpoint = "consul-traefik.kube-system.svc:8500"
+      watch = true
+      prefix = "traefik-internal"
+      
     [web]
       address = ":8080"
+
     [kubernetes]
+
     [metrics]
       [metrics.prometheus]
       buckets=[0.1,0.3,1.2,5.0]
       entryPoint = "traefik"
+
     [ping]
     entryPoint = "http"
+
+    [acme]
+      entryPoint = "https"
+      email = "amerenda89@gmail.com"
+      storage = "traefik-certificates/acme/account"
+      acmeLogging = true
+      OnHostRule = true
+      #caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
+      [acme.dnsChallenge]
+        provider = "digitalocean"
+      [[acme.domains]]
+        main = "*.home.stormhold.net"
+      [[acme.domains]]
+        main = "*.cloud.stormhold.net"
+      [[acme.domains]]
+        main = "*.home.amer.dev"
+      [[acme.domains]]
+        main = "*.cloud.amer.dev"
