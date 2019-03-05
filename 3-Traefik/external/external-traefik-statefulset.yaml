@@ -47,6 +47,12 @@ spec:
         args:
         - --api
         - --configfile=/config/traefik.toml
+        env:
+          - name: DO_AUTH_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: digitalocean-dns
+                key: DO_AUTH_TOKEN
         livenessProbe:
           httpGet:
             path: /health

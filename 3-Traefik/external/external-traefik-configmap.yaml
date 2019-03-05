@@ -47,5 +47,13 @@ data:
       acmeLogging = true
       OnHostRule = true
       #caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
-      [acme.httpChallenge]
-        entryPoint = "http"
+      [acme.dnsChallenge]
+        provider = "digitalocean"
+      [[acme.domains]]
+        main = "*.home.stormhold.net"
+      [[acme.domains]]
+        main = "*.cloud.stormhold.net"
+      [[acme.domains]]
+        main = "*.home.amer.dev"
+      [[acme.domains]]
+        main = "*.cloud.amer.dev"
