@@ -20,12 +20,22 @@ if ! [ -x "$(command -v helm)" ]; then
   exit 1
 fi
 
-./deploy_consul_cluster.sh
 
+helm del --purge consul-traefik
 
 sleep 20
-# Deploy external Traefik config
-kctl apply -f external-traefik-configmap.yaml
-# Deploy external Traefik and it's service
-kctl apply -f external-traefik-service.yaml
-kctl apply -f external-traefik-statefulset.yaml
+
+
+# Deploy Traefik RBAC
+kctl delete -f traefik-rbac.yaml
+kctl delete -f internal-traefik-statefulset.yaml
+kctl delete -f internal-traefik-service.yaml
+kctl delete -f internal-traefik-consul-ingress.yaml
+
+# Deploy internal Traefik config and service
+kctl delete -f internal-traefik-configmap.yaml
+
+# Deploy external Traefik config and service
+kctl delete -f external-traefik-configmap.yaml
+kctl delete -f external-traefik-statefulset.yaml
+kctl delete -f external-traefik-service.yaml

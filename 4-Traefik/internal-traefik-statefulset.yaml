@@ -1,42 +1,34 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: traefik-ingress-controller
+  namespace: kube-system
+---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: traefik-ingress-controller-external
+  name: traefik-ingress-controller-internal
   namespace: kube-system
   labels:
-    k8s-app: traefik-ingress-lb-external
+    k8s-app: traefik-ingress-lb-internal
 spec:
-  serviceName: traefik-ingress-lb-external
+  serviceName: traefik-ingress-lb-internal
   replicas: 1
   selector:
     matchLabels:
-      k8s-app: traefik-ingress-lb-external
+      k8s-app: traefik-ingress-lb-internal
   template:
     metadata:
       labels:
-        k8s-app: traefik-ingress-lb-external
-        name: traefik-ingress-lb-external
+        k8s-app: traefik-ingress-lb-internal
+        name: traefik-ingress-lb-internal
     spec:
       serviceAccountName: traefik-ingress-controller
       terminationGracePeriodSeconds: 60
-      # Remove the initContainer in case of a *big operation* to avoid inconsistencies when
-      # starting multiple pods in parallel. Might be a case a pod starts with partial config
-      # because another pod is overwriting the config in KV.
-      #initContainers:
-      #- name: storeconfig
-      #  image: traefik:v1.6
-      #  imagePullPolicy: IfNotPresent
-      #  args:
-      #  - storeconfig
-      #  - -c
-      #  - /config/traefik.toml
-      #  volumeMounts:
-      #  - name: config
-      #    mountPath: /etc/traefik
-      #    readOnly: true
       containers:
-      - image: traefik:v1.6
-        name: traefik-ingress-lb
+      - image: traefik:latest
+        name: traefik-ingress-lb-internal
         ports:
          - name: http
            containerPort: 80
@@ -73,7 +65,7 @@ spec:
       volumes:
       - name: config
         configMap:
-          name: traefik-conf-external
+          name: traefik-conf-internal
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
@@ -84,5 +76,5 @@ spec:
                 - key: k8s-app
                   operator: In
                   values:
-                  - traefik-ingress-lb
+                  - traefik-ingress-lb-internal
               topologyKey: kubernetes.io/hostname

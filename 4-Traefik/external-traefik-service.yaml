@@ -5,7 +5,7 @@ metadata:
   name: traefik-ingress-service-external
   namespace: kube-system
   labels:
-    k8s-app: traefik-ingress-lb
+    k8s-app: traefik-ingress-lb-external
 spec:
   selector:
     k8s-app: traefik-ingress-lb-external
@@ -32,7 +32,7 @@ metadata:
     traffic-type: internal
 spec:
   rules:
-  - host: traefik-ext.home.stormhold.net
+  - host: traefik-ext.home.amer.dev
     http:
       paths:
       - path: /

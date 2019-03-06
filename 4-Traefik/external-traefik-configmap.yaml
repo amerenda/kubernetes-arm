@@ -12,9 +12,12 @@ data:
     #Config to redirect http to https
     [entryPoints]
       [entryPoints.http]
-        address = ":80"
+      address = ":80"
+      compress = true
+        [entryPoints.http.redirect]
+        entryPoint = "https"
       [entryPoints.https]
-        address = ":443"
+      address = ":443"
         [entryPoints.https.tls]
 
     [api]
@@ -43,17 +46,13 @@ data:
     [acme]
       entryPoint = "https"
       email = "amerenda89@gmail.com"
-      storage = "traefik-certificates/acme/account"
+      storage = "traefik-external-certificates/acme/account"
       acmeLogging = true
       OnHostRule = true
       #caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
       [acme.dnsChallenge]
         provider = "digitalocean"
       [[acme.domains]]
-        main = "*.home.stormhold.net"
-      [[acme.domains]]
         main = "*.cloud.stormhold.net"
-      [[acme.domains]]
-        main = "*.home.amer.dev"
       [[acme.domains]]
         main = "*.cloud.amer.dev"

@@ -2,13 +2,13 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: traefik-ingress-service
+  name: traefik-ingress-service-internal
   namespace: kube-system
   labels:
-    k8s-app: traefik-ingress-lb
+    k8s-app: traefik-ingress-lb-internal
 spec:
   selector:
-    k8s-app: traefik-ingress-lb
+    k8s-app: traefik-ingress-lb-internal
   externalTrafficPolicy: Local
   ports:
     - protocol: TCP
@@ -26,15 +26,15 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: traefik-ingress-lb
+  name: traefik-ingress-lb-internal
   namespace: kube-system
 spec:
   rules:
-  - host: traefik.home.stormhold.net
+  - host: traefik.home.amer.dev
     http:
       paths:
       - path: /
         backend:
-          serviceName: traefik-ingress-service
+          serviceName: traefik-ingress-service-internal
           servicePort: admin
 

@@ -5,11 +5,10 @@ metadata:
   namespace: kube-system
 spec:
   rules:
-  - host: consul.home.stormhold.net
+  - host: consul.home.amer.dev
     http:
       paths:
       - path: /
         backend:
           serviceName: consul-traefik-ui
           servicePort: http
-

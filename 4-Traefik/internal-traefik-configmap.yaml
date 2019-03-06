@@ -1,39 +1,31 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: traefik-conf
+  name: traefik-conf-internal
   namespace: kube-system
 data:
   traefik.toml: |
     defaultEntryPoints = ["http","https"]
     debug = false
     logLevel = "INFO"
-    
+    # Do not verify backend certificates (use https backends)
+    #Config to redirect http to https
     [entryPoints]
       [entryPoints.http]
       address = ":80"
       compress = true
+        [entryPoints.http.redirect]
+        entryPoint = "https"
       [entryPoints.https]
       address = ":443"
         [entryPoints.https.tls]
 
-    # Do not verify backend certificates (use https backends)
-    #Config to redirect http to https
-    #[entryPoints]
-    #  [entryPoints.http]
-    #  address = ":80"
-    #  compress = true
-    #    [entryPoints.http.redirect]
-    #    entryPoint = "https"
-    #  [entryPoints.https]
-    #  address = ":443"
-    #    [entryPoints.https.tls]
     [consul]
       endpoint = "consul-traefik.kube-system.svc:8500"
       watch = true
       prefix = "traefik-internal"
-      
-    [web]
+
+    [api]
       address = ":8080"
 
     [kubernetes]
@@ -49,7 +41,7 @@ data:
     [acme]
       entryPoint = "https"
       email = "amerenda89@gmail.com"
-      storage = "traefik-certificates/acme/account"
+      storage = "traefik-internal-certificates/acme/account"
       acmeLogging = true
       OnHostRule = true
       #caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
@@ -58,8 +50,4 @@ data:
       [[acme.domains]]
         main = "*.home.stormhold.net"
       [[acme.domains]]
-        main = "*.cloud.stormhold.net"
-      [[acme.domains]]
         main = "*.home.amer.dev"
-      [[acme.domains]]
-        main = "*.cloud.amer.dev"
