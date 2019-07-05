@@ -25,7 +25,7 @@ spec:
             - name: NFS_SERVER
               value: 10.100.20.201
             - name: NFS_PATH
-              value: /mnt/nfs/extssd1/kube
+              value: /var/nfs/extssd1 
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
@@ -43,4 +43,4 @@ spec:
         - name: nfs-client-root
           nfs:
             server: 10.100.20.201
-            path: /mnt/nfs/extssd1/kube
+            path: /var/nfs/extssd1
