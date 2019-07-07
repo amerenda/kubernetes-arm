@@ -29,12 +29,15 @@ echo "deploying traefik..."
 
 # Deploy Traefik RBAC
 kctl apply -f traefik-rbac.yaml
+
+# Deploy internal Traefik config 
+kctl apply -f internal-traefik-configmap.yaml
+
+# Deploy 
 kctl apply -f internal-traefik-statefulset.yaml
 kctl apply -f internal-traefik-service.yaml
 kctl apply -f internal-traefik-consul-ingress.yaml
 
-# Deploy internal Traefik config and service
-kctl apply -f internal-traefik-configmap.yaml
 
 # Deploy external Traefik config and service
 kctl apply -f external-traefik-configmap.yaml
