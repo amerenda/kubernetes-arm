@@ -22,7 +22,9 @@ fi
 
 ./deploy_consul_cluster.sh
 
-sleep 20
+echo "waiting 1 minute for consul to deploy..."
+sleep 60
+echo "deploying traefik..."
 
 
 # Deploy Traefik RBAC
