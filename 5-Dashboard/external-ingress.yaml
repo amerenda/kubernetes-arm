@@ -14,7 +14,7 @@ metadata:
     ingress.kubernetes.io/auth-secret: dashboard-auth
 spec:
   rules:
-  - host: dashboard.cloud.stormhold.net
+  - host: dashboard.cloud.amer.dev
     http:
       paths:
       - path: /
