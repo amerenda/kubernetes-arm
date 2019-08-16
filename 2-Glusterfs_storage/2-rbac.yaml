@@ -1,0 +1,59 @@
+---
+kind: ServiceAccount
+apiVersion: v1
+metadata:
+  name: glusterfs-client-provisioner
+  namespace: glusterfs-storage
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: glusterfs-client-provisioner-runner
+rules:
+  - apiGroups: [""]
+    resources: ["persistentvolumes"]
+    verbs: ["get", "list", "watch", "create", "delete"]
+  - apiGroups: ["storage.k8s.io"
+    resources: ["storageclasses"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
+    resouces: ["events"]
+    verbs: ["create", "update", "patch"]
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: run-glusterfs-client-provisioner
+subjects:
+  - kind: ServiceAccount
+    name: glusterfs-client-provisioner
+    namespace: glusterfs-storage
+roleRef:
+  kind: ClusterRole
+  name: glusterfs-client-provisioner-runner
+  apiGroup: rbac.authorization.k8s.io
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: leader-locking-glusterfs-client-provisioner
+  namespace: glusterfs-storage
+rules:
+  - apiGroups: [""]
+    resources: ["endpoints"]
+    verbs: ["get", "list", "watch", "create", "update", "patch"]
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: leader-locking-glusterfs-client-provisioner
+  namespace: glusterfs-storage
+subjects:
+  - kind: ServiceAccount
+    name: glusterfs-client-provisioner
+    # replace with namespace where provisioner is deployed
+    namespace: glusterfs-storage
+roleRef:
+  kind: Role
+  name: leader-locking-glusterfs-client-provisioner
+  apiGroup: rbac.authorization.k8s.io
