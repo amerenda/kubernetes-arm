@@ -26,6 +26,9 @@ echo "waiting 1 minute for consul to deploy..."
 sleep 60
 echo "deploying traefik..."
 
+ansible-vault decrypt misc/secret.yaml
+kctl apply -f misc/secret.yaml
+git checkout -- misc/secret.yaml
 
 # Deploy Traefik RBAC
 kctl apply -f traefik-rbac.yaml
