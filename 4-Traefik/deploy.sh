@@ -42,7 +42,7 @@ kctl apply -f internal-traefik-service.yaml
 kctl apply -f internal-traefik-consul-ingress.yaml
 
 
-# Deploy external Traefik config and service
-kctl apply -f external-traefik-configmap.yaml
-kctl apply -f external-traefik-statefulset.yaml
-kctl apply -f external-traefik-service.yaml
+## Deploy external Traefik config and service
+#kctl apply -f external-traefik-configmap.yaml
+#kctl apply -f external-traefik-statefulset.yaml
+#kctl apply -f external-traefik-service.yaml
